@@ -7,7 +7,7 @@ exports.register = async (req, res) => {
 		return res.status(400).send({
 				message: "User Info can not be empty"
 		});
-	}
+	} 
 
 	let user = await User.findOne({ email: req.body.email });
 	if(user) return res.status(400).send('User alredy registered');

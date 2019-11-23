@@ -44,6 +44,7 @@ exports.editTask = async (req, res) => {
 		task.title = newTask.title || task.title;
 		task.description = newTask.description || task.description;
 		task.language_id = newTask.language_id || task.language_id;
+		task.tests = newTask.tests || task.tests
 		task.save()
 			.then(result => { res.send(result); });
 	}
@@ -59,7 +60,7 @@ exports.createTask = async (req, res) => {
 	}
 
 	try {
-		let task = new Task(_.pick(req.body, ['title', 'description', 'language_id']));
+		let task = new Task(_.pick(req.body, ['title', 'description', 'language_id','task']));
 
 		task.author = req.user._id;
 	

@@ -4,11 +4,13 @@ const logger = require('morgan');
 const debug = require('debug')('codeinterview:server');
 const http = require('http');
 const config = require('config');
+const cors = require('cors');
 
 if(!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined');
   process.exit(1);
 }
+// 'mongodb+srv://Admin:qweasd123@cluster0-yzodb.mongodb.net/CodeInterview?retryWrites=true&w=majority'
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/CodeInterview', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
@@ -33,6 +35,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
 const indexRouter = require('./routes/index.js');
 const usersRouter = require('./routes/users.js');
@@ -56,7 +59,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -84,4 +86,10 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
+let io = require('socket.io')(server);
+const room = require('./socket/room_namespace.js');
+room.createNameSpace(io);	
+
+
 module.exports = app;
+
