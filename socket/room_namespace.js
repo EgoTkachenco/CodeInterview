@@ -3,38 +3,52 @@ exports.createNameSpace = (io) => {
 		nsp = io.of('/room');
 		nsp.on('connection', socket => {
 			let roomID = null;
+			
 			socket.on('create-room', (data, fn) => {
+				console.log('data :', data);
 				socket.join(data);
 				roomID = data;
-				fn('Room Created ', data)
+				fn({name: data});
 			});
 
-			socket.on('connect-room', (roomId, fn) => {
-				if(io.nsps['/room'].adapter.rooms[roomId] && IO.nsps['/room'].adapter.rooms[roomId].length > 1) {
+			socket.on('connect-room', (roomId, name, fn) => {
+				if(io.nsps['/room'].adapter.rooms[roomId] && io.nsps['/room'].adapter.rooms[roomId].length > 1) {
 					console.log('Cancel connect');
 					socket.emit('message', 'Too many users in room already');
 				} else {
 					roomID = roomId
 					socket.join(roomId);
-					fn(true);
-					nsp.to(roomId).emit('message', 'Joined to room', 'success');
+					console.log(roomId);
+					socket.to(roomId).emit('send-username', name);
 					socket.to(roomId).emit('partner-connected');
-					socket.emit('get-invited-user-name');
+					nsp.to(roomId).emit('message', 'Joined to room', 'success');
 					socket.emit('start-video');
-
-					
+					fn(true);
 				};
-				
+			});
+
+			socket.on('send-room-info', data => {
+				nsp.to(roomID).emit('room-info', data);
 			});
 
 			socket.on('code-changed', (data) => {
-				console.log(data);
 				nsp.to(roomID).emit('new-code', data);
-			});			
-			socket.on('description-changed', (data) => {
-				console.log(roomID);
+			});
 
+			socket.on('description-changed', (data) => {
 				socket.to(roomID).emit('new-desc', data);
 			});
-		})
+
+			socket.on('exit-room', () => {
+				console.log(1)
+				nsp.to(roomID).emit('end-video');
+				nsp.to(roomID).emit('partner-disconnected');
+				socket.leave(roomID);
+			});
+
+			socket.on('disconnect', (reason) => {
+				nsp.to(roomID).emit('message', 'Partner Disconnected', 'success');
+				// nsp.to(roomID).emit('end-video');
+			});
+		});		
 }

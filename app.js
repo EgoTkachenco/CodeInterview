@@ -40,9 +40,11 @@ app.use(cors());
 const indexRouter = require('./routes/index.js');
 const usersRouter = require('./routes/users.js');
 const tasksRouter = require('./routes/task.js');
+const judgeRouter = require('./routes/judge.js');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
+app.use('/judge', judgeRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
