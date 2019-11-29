@@ -36,7 +36,6 @@ exports.createNameSpace = (io) => {
 						console.log(res);
 						nsp.to(roomID).emit('compile-output', res);						
 					})
-				console.log(data);
 			});
 
 			socket.on('send-room-info', data => {
