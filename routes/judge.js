@@ -1,27 +1,22 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 const axios = require('axios');
 const judgeUrl = 'https://api.judge0.com/submissions'
 
-router.post('/code', async (req, res) => {
-	if(req.body === {}) {
-		return res.status(400).send({
-				message: "Code Info can not be empty"
-		});
-	}
+module.exports.compileCode = async (data) => {
 	try {
-		let response = await axios.post(judgeUrl + '?base64_encoded=false', req.body);
+		let response = await axios.post(judgeUrl + '?base64_encoded=false', data);
 		let codeOutputRes;
 		if(response.data.token) {
 			do {
-				codeOutputRes = await axios.get(`${judgeUrl}/${response.data.token}?fields=stdout,stderr,status_id,language_id`);
-			} while(codeOutputRes.data.status_id < 3)
+				codeOutputRes = await axios.get(`${judgeUrl}/${response.data.token}`);
+			} while(codeOutputRes.data.status.id < 3)
 		}
-		res.send(codeOutputRes.data);
+		return codeOutputRes.data;
 	}
 	catch(ex) {
-		return res.status(500).send(ex.message);
+		return ex.message;
 	}
-});
+}
 
-module.exports = router;
+

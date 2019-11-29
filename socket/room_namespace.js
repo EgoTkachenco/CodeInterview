@@ -1,3 +1,5 @@
+const {compileCode} = require('../routes/judge.js');
+
 exports.createNameSpace = (io) => {
 		IO = io;
 		nsp = io.of('/room');
@@ -25,6 +27,16 @@ exports.createNameSpace = (io) => {
 					socket.emit('start-video');
 					fn(true);
 				};
+			});
+
+			socket.on('compile-code', data => {
+				nsp.to(roomID).emit('start-compiling');
+				compileCode(data)
+					.then(res => {
+						console.log(res);
+						nsp.to(roomID).emit('compile-output', res);						
+					})
+				console.log(data);
 			});
 
 			socket.on('send-room-info', data => {
