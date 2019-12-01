@@ -10,10 +10,11 @@ if(!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined');
   process.exit(1);
 }
-// 'mongodb://localhost/CodeInterview'
-
+// ''
+// mongodb+srv://Admin:qweasd123@cluster0-yzodb.mongodb.net/CodeInterview?retryWrites=true&w=majority
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://Admin:qweasd123@cluster0-yzodb.mongodb.net/CodeInterview?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+
+mongoose.connect('mongodb://localhost/CodeInterview', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => {
         console.log('Successfully connected to Mongo database');
     })
