@@ -24,13 +24,9 @@ const taskSchema = new mongoose.Schema({
 	},
 	tests: [
 		{
-			stdin: {
-				type: String,
-				required: true
+			input: {
 			},
-			exceptedStdout: {
-				type: String,
-				require: true
+			output: {
 			}
 		}
 	],
