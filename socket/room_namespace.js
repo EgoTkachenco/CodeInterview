@@ -42,6 +42,18 @@ exports.createNameSpace = (io) => {
 				nsp.to(roomID).emit('room-info', data);
 			});
 
+			socket.on('set-enable-test', data => {
+				nsp.to(roomID).emit('new-enable-test', data);
+			});
+			
+			socket.on('send-full-error', data => {
+				nsp.to(roomID).emit('new-full-error', data);
+			});
+
+			socket.on('set-new-current-task', data => {
+				nsp.to(roomID).emit('new-current-task', data);
+			});
+			
 			socket.on('code-changed', (data) => {
 				nsp.to(roomID).emit('new-code', data);
 			});
