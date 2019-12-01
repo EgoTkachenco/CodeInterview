@@ -60,7 +60,8 @@ exports.createTask = async (req, res) => {
 	}
 
 	try {
-		let task = new Task(_.pick(req.body, ['title', 'description', 'language_id','task']));
+		console.log(req.body);
+		let task = new Task(_.pick(req.body, ['title', 'description', 'language_id','tests']));
 
 		task.author = req.user._id;
 	
