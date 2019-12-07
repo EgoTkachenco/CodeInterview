@@ -14,7 +14,7 @@ if(!config.get('jwtPrivateKey')) {
 // mongodb+srv://Admin:qweasd123@cluster0-yzodb.mongodb.net/CodeInterview?retryWrites=true&w=majority
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/CodeInterview', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect('mongodb://mongo:27017/CodeInterview', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => {
         console.log('Successfully connected to Mongo database');
     })
