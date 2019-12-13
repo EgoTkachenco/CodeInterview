@@ -11,7 +11,6 @@ if(!config.get('jwtPrivateKey')) {
   process.exit(1);
 }
 // ''mongodb://mongo:27017/CodeInterview
-// 
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://Admin:qweasd123@cluster0-yzodb.mongodb.net/CodeInterview?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })

@@ -1,8 +1,18 @@
-
 FROM node:carbon
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . /app
+
 EXPOSE 3000
-CMD node app.js
+
+WORKDIR /app
+
+COPY package.json package-lock*.json ./
+
+RUN chown -R node:node .
+
+USER node
+
+RUN npm install && npm cache clean --force
+
+COPY --chown=node:node . .
+
+CMD [ "node", "app.js"]
+

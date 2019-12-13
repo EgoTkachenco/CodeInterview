@@ -40,11 +40,12 @@ exports.editTask = async (req, res) => {
 	try {
 		let task = await Task.findById(req.params.id);
 		console.log(req.params.id);
-		const newTask = _.pick(req.body, ['title', 'description', 'language_id']);
+		const newTask = _.pick(req.body, ['title', 'description', 'language_id', 'isPublic', 'tests']);
 		task.title = newTask.title || task.title;
 		task.description = newTask.description || task.description;
 		task.language_id = newTask.language_id || task.language_id;
-		task.tests = newTask.tests || task.tests
+		task.tests = newTask.tests || task.tests;
+		task.isPublic = newTask.isPublic || task.isPublic;
 		task.save()
 			.then(result => { res.send(result); });
 	}
@@ -61,7 +62,7 @@ exports.createTask = async (req, res) => {
 
 	try {
 		console.log(req.body);
-		let task = new Task(_.pick(req.body, ['title', 'description', 'language_id','tests']));
+		let task = new Task(_.pick(req.body, ['title', 'description', 'language_id', 'tests', 'isPublic']));
 
 		task.author = req.user._id;
 	
