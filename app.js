@@ -10,7 +10,8 @@ if(!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined');
   process.exit(1);
 }
-// ''mongodb://mongo:27017/CodeInterview
+//''
+// 'mongodb://mongo:27017/CodeInterview'
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://Admin:qweasd123@cluster0-yzodb.mongodb.net/CodeInterview?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
@@ -25,7 +26,7 @@ const port = process.env.PORT || '3000';
 app.set('port', port);
 
 server.listen(port, () => {
-    console.log('Server is listening to port', port);
+    console.log('Server is listening to port', app.get('port'));
   });
 
 server.on('error', onError);
@@ -40,11 +41,13 @@ app.use(cors());
 const indexRouter = require('./routes/index.js');
 const usersRouter = require('./routes/users.js');
 const tasksRouter = require('./routes/task.js');
-// const judgeRouter = require('./routes/judge.js');
+const feedbackRouter = require('./routes/feedback.js');
+const roomInfoRouter = require('./routes/roomInfo.js');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
-// app.use('/judge', judgeRouter);
+app.use('/feedback', feedbackRouter);
+app.use('/roomInfo', roomInfoRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

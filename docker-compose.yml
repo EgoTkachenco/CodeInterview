@@ -1,15 +1,15 @@
-version: "3.4"
-services:
+version: "2.2"
+services: 
   app:
-    container_name: example-serv
+    container_name: code-interview-app
     restart: always
     build: .
     ports:
       - "3000:3000"
-    links:
-      - mongo
-  mongo:
-    container_name: mongo
-    image: mongo
-    ports:
-      - "1200:27017"
+  #   links:
+  #     - mongo
+  # mongo:
+  #   container_name: mongo
+  #   image: mongo
+  #   ports:
+  #     - "27017:27017"
