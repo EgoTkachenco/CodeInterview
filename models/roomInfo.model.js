@@ -2,13 +2,34 @@ const mongoose = require('mongoose');
 
 const roomInfoSchema = new mongoose.Schema({
 	tasks: [{
-		id: {
+		task_id: {
 			type: mongoose.SchemaTypes.ObjectId
 		},
 		name: {
 			type: String
+		},
+		attemptsCount:{
+			require: true,
+			type: Number,
+			defauld: 0
+		},
+		isPassed: {
+			required: true,
+			type: Boolean,
+			defauld: false
+		},
+		finishedCode: {
+			type: String
+		},
+		decisionTime: {
+			type: Number,
+			defauld: 0
 		}
 	}],
+	creator: {
+		required: true,
+		type: mongoose.SchemaTypes.ObjectId
+	},
 	language: {
 		id:{
 			type: String
@@ -24,17 +45,7 @@ const roomInfoSchema = new mongoose.Schema({
 	duration: {
 		required: true,
 		type: Number
-	},
-	codeResults: [{
-		compileResponse: {
-			passed: Number,
-			failed: Number,
-			// shortDescription: 
-		},
-		task_id: {
-			type: mongoose.SchemaTypes.ObjectId
-		}
-	}]
+	}
 	
 });
 

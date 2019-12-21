@@ -19,7 +19,7 @@ exports.saveRoom = async (req, res) => {
 	}
 
 	try {
-		let room = new RoomInfo(_.pick(req.body, ['tasks', 'duration', 'language', 'startTime', 'codeResults']));
+		let room = new RoomInfo(_.pick(req.body, ['tasks', 'duration', 'language', 'startTime', 'creator']));
 	
 		await room.save()
 			.then(result => { return res.send(result); });

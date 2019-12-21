@@ -1,6 +1,6 @@
 FROM node:carbon
 
-EXPOSE 3000
+# EXPOSE 3000
 
 WORKDIR /app
 
