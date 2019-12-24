@@ -14,7 +14,6 @@ const roomInfoSchema = new mongoose.Schema({
 			defauld: 0
 		},
 		isPassed: {
-			required: true,
 			type: Boolean,
 			defauld: false
 		},

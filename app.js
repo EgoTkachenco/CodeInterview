@@ -43,12 +43,13 @@ const usersRouter = require('./routes/users.js');
 const tasksRouter = require('./routes/task.js');
 const feedbackRouter = require('./routes/feedback.js');
 const roomInfoRouter = require('./routes/roomInfo.js');
+const staticticRouter = require('./routes/statistic.js');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/roomInfo', roomInfoRouter);
-
+app.use('/statistic', staticticRouter);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

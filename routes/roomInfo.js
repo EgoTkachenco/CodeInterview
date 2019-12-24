@@ -6,4 +6,6 @@ router.get('', roomInfoController.getAllRooms);
 
 router.put('', roomInfoController.saveRoom);
 
+router.get('/predictSessionTime', roomInfoController.predictSessionTime)
+
 module.exports = router;

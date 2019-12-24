@@ -4,7 +4,7 @@ const User = require('../models/user.model.js');
 
 exports.getMyTasks = async (req, res) => {
 	try {
-		let tasks = await Task.find({author: req.user._id});
+		let tasks = await Task.find({author: req.user._id, language_id: req.query.language});
 		res.send(tasks);
 	}
 	catch(ex) {
@@ -14,7 +14,7 @@ exports.getMyTasks = async (req, res) => {
 
 exports.getAllTasks = async (req, res) => {
 	try {
-		let tasks = await Task.find({isPublic: true});
+		let tasks = await Task.find({isPublic: true, language_id: req.query.language});
 		res.send(tasks);
 	}
 	catch(ex) {

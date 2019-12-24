@@ -22,6 +22,9 @@ const taskSchema = new mongoose.Schema({
 	author: {
 		type: mongoose.SchemaTypes.ObjectId
 	},
+	decisionTime: {
+		type: Number
+	},
 	tests: [
 		{
 			input: {
@@ -40,6 +43,14 @@ taskSchema.methods.used = function() {
 	this.stars++;
 	return this.stars;
 };
-
+taskSchema.methods.setAverageTime = function(val) {
+	this.decisionTime;
+	if(this.decisionTime) {
+		this.decisionTime = ( this.decisionTime + val ) / 2;
+	} else {
+		this.decisionTime = val;
+	}
+	return this.decisionTime;
+};
 
 module.exports = mongoose.model('Task', taskSchema);
